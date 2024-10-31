@@ -1,4 +1,5 @@
 import csv
+import matplotlib.pyplot as plt
 
 def read_csv_to_dict(filename):
     data_dict = {}
@@ -26,6 +27,21 @@ def analyze_emissions(data_dict):
     print(f"In {year}, countries with minimum and maximum CO2 emission level were: {min_country} and {max_country} respectively.")
     print(f"Average CO2 emissions in {year} were {avg_emission:.6f}")
 
+def visualize_data(data_dict):
+    country = input("Select the country to visualize: ")
+    if country in data_dict:
+        emissions = data_dict[country]
+        years = range(1997,2011)
+
+        plt.plot(years, emissions)
+        plt.xlabel("Year")
+        plt.ylabel(f"Emissions in {country}")
+        plt.title(f"Year vs Emissions in Capita for {country}")
+        plt.show()
+    else:
+        print(f"Country '{country}' not found in the data.")
+
 filename = '../data/Emissions.csv'
 data = read_csv_to_dict(filename)
 analyze_emissions(data)
+visualize_data(data)
