@@ -41,7 +41,26 @@ def visualize_data(data_dict):
     else:
         print(f"Country '{country}' not found in the data.")
 
+def compare_countries(data_dict):
+    countries_str = input("Write two comma-separated countries for which want to visualize data: ")
+    countries = [country.strip() for country in countries_str.split(',')]
+
+    if all(country in data_dict for country in countries):
+        years = range(1997,2011)
+        for country in countries:
+            emissions = data_dict[country]
+            plt.plot(years, emissions, label=country)
+
+        plt.xlabel("Year")
+        plt.ylabel("Emissions in capita")
+        plt.title("Year vs Emissions in Capita")
+        plt.legend()
+        plt.show()
+    else:
+        print("One or both countries not found in the data.")
+
 filename = '../data/Emissions.csv'
 data = read_csv_to_dict(filename)
 analyze_emissions(data)
 visualize_data(data)
+compare_countries(data)
